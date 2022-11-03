@@ -1,0 +1,41 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <%- include('includes/navigation.ejs') %>
+            <div class="todo-container">
+                <h2>To-Do List</h2>
+                <div class="todo">
+                    <form action="" method="POST" class="todo-header">
+                        
+                        <input type="text" name="content">
+                        <button type="submit">+</button>
+                    </form>
+                    <ul class="todo-list">
+                        <% todo.forEach(details=> { %>
+                            <% if (details._id==idTask) { %>
+                                <li class="todo-list-item">
+                                    <form action="/edit/<%= details._id %>" method="POST">
+                                        <input type="text" value="<%= details.content %>" name="content">
+                                        <button class="cancel" type="submit">Ok</button>
+                                        <a href="/" class="cancel">Cancel</a>
+                                    </form>
+                                </li>
+                                <% } else { %>
+                                    <li class="todo-list-item">
+                                        <div class="todo-list-item-name">
+                                            <%= details.content %>
+                                        </div>
+                                        <a href="/edit/<%= details._id %>" class="edit">
+                                        </a>
+                                        <a href="/remove/<%= details._id %>" class="remove"> 
+                                        </a>
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    </li>
+                                    <% } %>
+                                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+    </body>
